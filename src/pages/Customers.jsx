@@ -1,3 +1,5 @@
+import { Card, Table, Button } from 'react-bootstrap';
+
 export default function Customers() {
   const customers = [
     { id: 1, name: 'Ahmed Khan', email: 'ahmed@example.com', phone: '+92 300 1234567', balance: 'PKR 15,000', orders: 12 },
@@ -9,48 +11,48 @@ export default function Customers() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Customers</h2>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-          + Add Customer
-        </button>
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 className="mb-0">Customers</h2>
+        <Button variant="primary">+ Add Customer</Button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Orders</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Balance</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {customers.map((customer) => (
-                <tr key={customer.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{customer.name}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{customer.email}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{customer.phone}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{customer.orders}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    <span className={customer.balance === 'PKR 0' ? 'text-green-600' : 'text-orange-600 font-medium'}>
-                      {customer.balance}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm">
-                    <button className="text-blue-600 hover:text-blue-800 mr-3">View</button>
-                    <button className="text-gray-600 hover:text-gray-800">Edit</button>
-                  </td>
+      <Card>
+        <Card.Body className="p-0">
+          <div className="table-responsive">
+            <Table hover className="mb-0">
+              <thead className="table-light">
+                <tr>
+                  <th>Name</th>
+                  <th className="d-none d-md-table-cell">Email</th>
+                  <th className="d-none d-lg-table-cell">Phone</th>
+                  <th>Orders</th>
+                  <th>Balance</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody>
+                {customers.map((customer) => (
+                  <tr key={customer.id}>
+                    <td className="fw-medium">{customer.name}</td>
+                    <td className="d-none d-md-table-cell">{customer.email}</td>
+                    <td className="d-none d-lg-table-cell">{customer.phone}</td>
+                    <td>{customer.orders}</td>
+                    <td>
+                      <span className={customer.balance === 'PKR 0' ? 'text-success' : 'text-warning fw-medium'}>
+                        {customer.balance}
+                      </span>
+                    </td>
+                    <td>
+                      <Button variant="link" size="sm" className="p-0 me-2">View</Button>
+                      <Button variant="link" size="sm" className="p-0 text-secondary">Edit</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

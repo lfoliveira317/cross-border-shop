@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Container, Row, Col, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import Dashboard from './pages/Dashboard';
 import Customers from './pages/Customers';
 import Orders from './pages/Orders';
@@ -9,6 +10,7 @@ import Payments from './pages/Payments';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: '📊' },
@@ -33,37 +35,70 @@ function App() {
     }
   };
 
+  const handleNavClick = (pageId) => {
+    setCurrentPage(pageId);
+    setShowSidebar(false);
+  };
+
+  const SidebarContent = () => (
+    <>
+      <div className="p-4 border-bottom">
+        <h4 className="mb-0">Cross-Border Shop</h4>
+        <small className="text-muted">Internal Management</small>
+      </div>
+      <Nav className="flex-column p-3">
+        {navigation.map((item) => (
+          <Nav.Link
+            key={item.id}
+            onClick={() => handleNavClick(item.id)}
+            className={`nav-item-custom d-flex align-items-center gap-3 px-3 py-2 mb-2 rounded ${
+              currentPage === item.id ? 'active' : 'text-dark'
+            }`}
+          >
+            <span style={{ fontSize: '1.25rem' }}>{item.icon}</span>
+            <span className="fw-medium">{item.name}</span>
+          </Nav.Link>
+        ))}
+      </Nav>
+    </>
+  );
+
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-white shadow-lg">
-        <div className="p-6 border-b">
-          <h1 className="text-2xl font-bold text-gray-800">Cross-Border Shop</h1>
-          <p className="text-sm text-gray-500 mt-1">Internal Management</p>
-        </div>
-        <nav className="p-4">
-          {navigation.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setCurrentPage(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg text-left transition-colors ${
-                currentPage === item.id
-                  ? 'bg-blue-500 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              <span className="text-xl">{item.icon}</span>
-              <span className="font-medium">{item.name}</span>
-            </button>
-          ))}
-        </nav>
+    <div className="d-flex" style={{ minHeight: '100vh' }}>
+      {/* Desktop Sidebar */}
+      <div className="sidebar d-none d-lg-block" style={{ width: '280px' }}>
+        <SidebarContent />
       </div>
 
+      {/* Mobile Offcanvas Sidebar */}
+      <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)} responsive="lg">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Menu</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body className="p-0">
+          <SidebarContent />
+        </Offcanvas.Body>
+      </Offcanvas>
+
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
-        <div className="p-8">
+      <div className="flex-grow-1" style={{ backgroundColor: '#f8f9fa' }}>
+        {/* Mobile Header */}
+        <Navbar bg="white" className="d-lg-none border-bottom">
+          <Container fluid>
+            <Navbar.Brand>Cross-Border Shop</Navbar.Brand>
+            <button 
+              className="btn btn-outline-secondary"
+              onClick={() => setShowSidebar(true)}
+            >
+              ☰
+            </button>
+          </Container>
+        </Navbar>
+
+        {/* Page Content */}
+        <Container fluid className="p-3 p-md-4">
           {renderPage()}
-        </div>
+        </Container>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { Card, Table, Button, Badge } from 'react-bootstrap';
+
 export default function Shipments() {
   const shipments = [
     { 
@@ -52,61 +54,61 @@ export default function Shipments() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Shipments</h2>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-          + New Shipment
-        </button>
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 className="mb-0">Shipments</h2>
+        <Button variant="primary">+ New Shipment</Button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shipment ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Traveler</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Route</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weight</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cost/KG</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Freight</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Items</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Departure</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Arrival</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {shipments.map((shipment) => (
-                <tr key={shipment.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{shipment.id}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{shipment.traveler}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{shipment.route}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700 font-medium">{shipment.totalWeight}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{shipment.costPerKg}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700 font-medium">{shipment.freightCost}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{shipment.items}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{shipment.departure}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{shipment.arrival}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      shipment.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                      shipment.status === 'In Transit' ? 'bg-blue-100 text-blue-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {shipment.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm">
-                    <button className="text-blue-600 hover:text-blue-800">View</button>
-                  </td>
+      <Card>
+        <Card.Body className="p-0">
+          <div className="table-responsive">
+            <Table hover className="mb-0">
+              <thead className="table-light">
+                <tr>
+                  <th>Shipment ID</th>
+                  <th>Traveler</th>
+                  <th className="d-none d-lg-table-cell">Route</th>
+                  <th className="d-none d-xl-table-cell">Weight</th>
+                  <th className="d-none d-lg-table-cell">Cost/KG</th>
+                  <th>Total Freight</th>
+                  <th className="d-none d-xl-table-cell">Items</th>
+                  <th className="d-none d-md-table-cell">Departure</th>
+                  <th className="d-none d-md-table-cell">Arrival</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody>
+                {shipments.map((shipment) => (
+                  <tr key={shipment.id}>
+                    <td className="fw-medium">{shipment.id}</td>
+                    <td>{shipment.traveler}</td>
+                    <td className="d-none d-lg-table-cell">{shipment.route}</td>
+                    <td className="d-none d-xl-table-cell fw-medium">{shipment.totalWeight}</td>
+                    <td className="d-none d-lg-table-cell">{shipment.costPerKg}</td>
+                    <td className="fw-medium">{shipment.freightCost}</td>
+                    <td className="d-none d-xl-table-cell">{shipment.items}</td>
+                    <td className="d-none d-md-table-cell">{shipment.departure}</td>
+                    <td className="d-none d-md-table-cell">{shipment.arrival}</td>
+                    <td>
+                      <Badge bg={
+                        shipment.status === 'Delivered' ? 'success' :
+                        shipment.status === 'In Transit' ? 'info' :
+                        'warning'
+                      }>
+                        {shipment.status}
+                      </Badge>
+                    </td>
+                    <td>
+                      <Button variant="link" size="sm" className="p-0">View</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

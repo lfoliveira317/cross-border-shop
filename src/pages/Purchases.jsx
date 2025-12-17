@@ -1,3 +1,5 @@
+import { Card, Table, Button, Badge } from 'react-bootstrap';
+
 export default function Purchases() {
   const purchases = [
     { 
@@ -52,70 +54,70 @@ export default function Purchases() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Purchases</h2>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-          + New Purchase
-        </button>
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 className="mb-0">Purchases</h2>
+        <Button variant="primary">+ New Purchase</Button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Purchase ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Supplier</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Currency</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">FX Rate</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">PKR Amount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Discount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Items</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {purchases.map((purchase) => (
-                <tr key={purchase.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{purchase.id}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{purchase.date}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{purchase.supplier}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      purchase.currency === 'USD' ? 'bg-green-100 text-green-800' :
-                      purchase.currency === 'AED' ? 'bg-blue-100 text-blue-800' :
-                      purchase.currency === 'GBP' ? 'bg-purple-100 text-purple-800' :
-                      'bg-gray-100 text-gray-800'
-                    }`}>
-                      {purchase.currency}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{purchase.amount}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{purchase.fxRate}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700 font-medium">{purchase.pkrAmount}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{purchase.discount}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{purchase.items}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      purchase.status === 'Received' ? 'bg-green-100 text-green-800' :
-                      purchase.status === 'In Transit' ? 'bg-blue-100 text-blue-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {purchase.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm">
-                    <button className="text-blue-600 hover:text-blue-800">View</button>
-                  </td>
+      <Card>
+        <Card.Body className="p-0">
+          <div className="table-responsive">
+            <Table hover className="mb-0">
+              <thead className="table-light">
+                <tr>
+                  <th>Purchase ID</th>
+                  <th className="d-none d-md-table-cell">Date</th>
+                  <th>Supplier</th>
+                  <th>Currency</th>
+                  <th className="d-none d-lg-table-cell">Amount</th>
+                  <th className="d-none d-xl-table-cell">FX Rate</th>
+                  <th>PKR Amount</th>
+                  <th className="d-none d-lg-table-cell">Discount</th>
+                  <th className="d-none d-xl-table-cell">Items</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody>
+                {purchases.map((purchase) => (
+                  <tr key={purchase.id}>
+                    <td className="fw-medium">{purchase.id}</td>
+                    <td className="d-none d-md-table-cell">{purchase.date}</td>
+                    <td>{purchase.supplier}</td>
+                    <td>
+                      <Badge bg={
+                        purchase.currency === 'USD' ? 'success' :
+                        purchase.currency === 'AED' ? 'info' :
+                        purchase.currency === 'GBP' ? 'primary' :
+                        'secondary'
+                      }>
+                        {purchase.currency}
+                      </Badge>
+                    </td>
+                    <td className="d-none d-lg-table-cell">{purchase.amount}</td>
+                    <td className="d-none d-xl-table-cell">{purchase.fxRate}</td>
+                    <td className="fw-medium">{purchase.pkrAmount}</td>
+                    <td className="d-none d-lg-table-cell">{purchase.discount}</td>
+                    <td className="d-none d-xl-table-cell">{purchase.items}</td>
+                    <td>
+                      <Badge bg={
+                        purchase.status === 'Received' ? 'success' :
+                        purchase.status === 'In Transit' ? 'info' :
+                        'warning'
+                      }>
+                        {purchase.status}
+                      </Badge>
+                    </td>
+                    <td>
+                      <Button variant="link" size="sm" className="p-0">View</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { Card, Table, Button, Badge, Row, Col } from 'react-bootstrap';
+
 export default function Payments() {
   const payments = [
     { 
@@ -58,84 +60,85 @@ export default function Payments() {
   ];
 
   const summary = [
-    { label: 'Total Received', value: 'PKR 97,250', color: 'text-green-600' },
-    { label: 'Pending Payments', value: 'PKR 32,000', color: 'text-orange-600' },
-    { label: 'Outstanding Balance', value: 'PKR 325,000', color: 'text-red-600' },
+    { label: 'Total Received', value: 'PKR 97,250', color: 'text-success' },
+    { label: 'Pending Payments', value: 'PKR 32,000', color: 'text-warning' },
+    { label: 'Outstanding Balance', value: 'PKR 325,000', color: 'text-danger' },
   ];
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Payments</h2>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-          + Record Payment
-        </button>
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 className="mb-0">Payments</h2>
+        <Button variant="primary">+ Record Payment</Button>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <Row className="g-3 g-md-4 mb-4">
         {summary.map((item, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow">
-            <p className="text-sm text-gray-500 mb-1">{item.label}</p>
-            <p className={`text-2xl font-bold ${item.color}`}>{item.value}</p>
-          </div>
+          <Col key={index} xs={12} md={4}>
+            <Card>
+              <Card.Body>
+                <p className="text-muted mb-1 small">{item.label}</p>
+                <h3 className={`mb-0 ${item.color}`}>{item.value}</h3>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
+      </Row>
 
       {/* Payments Table */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Payment ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Method</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reference</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {payments.map((payment) => (
-                <tr key={payment.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{payment.id}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{payment.date}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{payment.customer}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{payment.orderId}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      payment.type === 'Full Payment' ? 'bg-green-100 text-green-800' :
-                      payment.type === 'Deposit' ? 'bg-blue-100 text-blue-800' :
-                      'bg-orange-100 text-orange-800'
-                    }`}>
-                      {payment.type}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700 font-medium">{payment.amount}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{payment.method}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{payment.reference}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      payment.status === 'Confirmed' ? 'bg-green-100 text-green-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {payment.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm">
-                    <button className="text-blue-600 hover:text-blue-800">View</button>
-                  </td>
+      <Card>
+        <Card.Body className="p-0">
+          <div className="table-responsive">
+            <Table hover className="mb-0">
+              <thead className="table-light">
+                <tr>
+                  <th>Payment ID</th>
+                  <th className="d-none d-md-table-cell">Date</th>
+                  <th>Customer</th>
+                  <th className="d-none d-lg-table-cell">Order ID</th>
+                  <th className="d-none d-xl-table-cell">Type</th>
+                  <th>Amount</th>
+                  <th className="d-none d-lg-table-cell">Method</th>
+                  <th className="d-none d-xl-table-cell">Reference</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody>
+                {payments.map((payment) => (
+                  <tr key={payment.id}>
+                    <td className="fw-medium">{payment.id}</td>
+                    <td className="d-none d-md-table-cell">{payment.date}</td>
+                    <td>{payment.customer}</td>
+                    <td className="d-none d-lg-table-cell">{payment.orderId}</td>
+                    <td className="d-none d-xl-table-cell">
+                      <Badge bg={
+                        payment.type === 'Full Payment' ? 'success' :
+                        payment.type === 'Deposit' ? 'info' :
+                        'warning'
+                      }>
+                        {payment.type}
+                      </Badge>
+                    </td>
+                    <td className="fw-medium">{payment.amount}</td>
+                    <td className="d-none d-lg-table-cell">{payment.method}</td>
+                    <td className="d-none d-xl-table-cell">{payment.reference}</td>
+                    <td>
+                      <Badge bg={payment.status === 'Confirmed' ? 'success' : 'warning'}>
+                        {payment.status}
+                      </Badge>
+                    </td>
+                    <td>
+                      <Button variant="link" size="sm" className="p-0">View</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

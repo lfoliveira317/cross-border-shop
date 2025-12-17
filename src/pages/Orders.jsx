@@ -1,3 +1,5 @@
+import { Card, Table, Button, Badge } from 'react-bootstrap';
+
 export default function Orders() {
   const orders = [
     { 
@@ -48,70 +50,68 @@ export default function Orders() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Orders</h2>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-          + New Order
-        </button>
+      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 className="mb-0">Orders</h2>
+        <Button variant="primary">+ New Order</Button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Items</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deposit</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Balance</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{order.id}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{order.date}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{order.customer}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      order.type === 'Preorder' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-                    }`}>
-                      {order.type}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{order.items}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700 font-medium">{order.total}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700">{order.deposit}</td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={order.balance === 'PKR 0' ? 'text-green-600' : 'text-orange-600 font-medium'}>
-                      {order.balance}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                      order.status === 'Shipped' ? 'bg-blue-100 text-blue-800' :
-                      order.status === 'Processing' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-gray-100 text-gray-800'
-                    }`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm">
-                    <button className="text-blue-600 hover:text-blue-800">View</button>
-                  </td>
+      <Card>
+        <Card.Body className="p-0">
+          <div className="table-responsive">
+            <Table hover className="mb-0">
+              <thead className="table-light">
+                <tr>
+                  <th>Order ID</th>
+                  <th className="d-none d-md-table-cell">Date</th>
+                  <th>Customer</th>
+                  <th className="d-none d-lg-table-cell">Type</th>
+                  <th className="d-none d-xl-table-cell">Items</th>
+                  <th>Total</th>
+                  <th className="d-none d-lg-table-cell">Deposit</th>
+                  <th className="d-none d-lg-table-cell">Balance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order.id}>
+                    <td className="fw-medium">{order.id}</td>
+                    <td className="d-none d-md-table-cell">{order.date}</td>
+                    <td>{order.customer}</td>
+                    <td className="d-none d-lg-table-cell">
+                      <Badge bg={order.type === 'Preorder' ? 'primary' : 'success'}>
+                        {order.type}
+                      </Badge>
+                    </td>
+                    <td className="d-none d-xl-table-cell">{order.items}</td>
+                    <td className="fw-medium">{order.total}</td>
+                    <td className="d-none d-lg-table-cell">{order.deposit}</td>
+                    <td className="d-none d-lg-table-cell">
+                      <span className={order.balance === 'PKR 0' ? 'text-success' : 'text-warning fw-medium'}>
+                        {order.balance}
+                      </span>
+                    </td>
+                    <td>
+                      <Badge bg={
+                        order.status === 'Delivered' ? 'success' :
+                        order.status === 'Shipped' ? 'info' :
+                        order.status === 'Processing' ? 'warning' :
+                        'secondary'
+                      }>
+                        {order.status}
+                      </Badge>
+                    </td>
+                    <td>
+                      <Button variant="link" size="sm" className="p-0">View</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 }
