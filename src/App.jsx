@@ -71,7 +71,7 @@ function App() {
       </div>
 
       {/* Mobile Offcanvas Sidebar */}
-      <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)} responsive="lg">
+      <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Menu</Offcanvas.Title>
         </Offcanvas.Header>

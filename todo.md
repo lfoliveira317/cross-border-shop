@@ -20,3 +20,8 @@
 - [x] Replace Tailwind with Bootstrap classes
 - [x] Ensure full responsive design for mobile, tablet, and desktop
 - [x] Test all pages on different screen sizes
+
+
+## Bug Fixes
+
+- [x] Remove duplicate menu in mobile view
